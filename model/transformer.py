@@ -1,7 +1,7 @@
 import torch.nn as nn
 
 
-# 定义Transformer模型
+# Transformer Model
 class TransformerModel(nn.Module):
     def __init__(self, input_size, hidden_dim=512, num_classes=10, num_layers=4):
         super(TransformerModel, self).__init__()

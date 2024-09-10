@@ -1,5 +1,5 @@
 """
-拉曼数据读取
+Read Raman Spectra Data
 """
 
 import os
@@ -14,17 +14,16 @@ DATA_FILE_SUFFIX = ['.txt', '.npy']
 
 class Spectrum:
     """
-    读取单个拉曼光谱文件，文件格式为['.txt', '.npy']
+    read single Raman spectrum file, format - ['.txt', '.npy']
     """
 
     def __init__(self, data_file: str, cut_range: tuple = None, process_flag: bool = False):
-        # splitext(file)[0]获取文件名，splitext(file)[-1]获取带‘.’的后缀名
+        # splitext(file)[0] - read filename without suffix, splitext(file)[-1] - read filename with suffix
         data_file_suffix = os.path.splitext(data_file)[-1]
         assert data_file_suffix in DATA_FILE_SUFFIX
         # file
         self.data_file = data_file.replace('\\', '/')
         self.cut_range = cut_range
-        # 获取文件名，带后缀
         self.data_file_name = os.path.split(self.data_file)[-1]
         # data
         self.data = None
@@ -121,7 +120,7 @@ class Spectrum:
             if line.startswith('#'):
                 continue
             elif not line[0].isdigit():
-                # 将首列数上方的列名作为X坐标轴名
+                # x-axis name
                 self.x_axis = line.split('\t')[0]
                 continue
             items = line.split('\t')
@@ -157,9 +156,9 @@ class Spectrum:
 
     def process(self):
         """
-        step 1：去尖峰（宇宙射线）
-        step 2：去基线
-        step 3：归一化
+        step 1：spike removal
+        step 2：baseline subtraction
+        step 3：normalization
         :return: self.data_y
         """
         data = process_fun.despiking(self.data_y)
@@ -193,7 +192,8 @@ class Spectrum:
 
 class Spectra:
     """
-    读取文件夹下的所有光谱文件，item返回Spectrum
+    read spectra in a folder
+    format - '/folder/{data_file}'
     """
 
     def __init__(self, data_folder_path, cut_range: tuple = None, process_flag: bool = False):
@@ -201,7 +201,7 @@ class Spectra:
         self.cut_range = cut_range
         self.process_flag = process_flag
         self.data_folder_name = os.path.split(self.data_folder_path)[-1]
-        # 获取以txt和npy后缀的文件列表
+        # get data file list, file format - ['.txt', '.npy']
         file_list = os.listdir(self.data_folder_path)
         self.data_file_list = [os.path.join(self.data_folder_path, x).replace('\\', '/') for x in file_list if
                                x.endswith('.txt') or x.endswith('.npy')]
@@ -237,14 +237,15 @@ class Spectra:
 
 class SpectraFolder:
     """
-    读取“文件夹/子文件夹/”下的所有光谱文件，并以子文件夹作为分类名
+    read spectra in sub-folders in a folder, use the names of sub-folders as labels
+    format - '/folder/sub-folder/{data_file}'
     """
 
     def __init__(self, folder_path, cut_range: tuple = None, process_flag: bool = False):
         self.folder_path = folder_path
         self.cut_range = cut_range
         self.process_flag = process_flag
-        # 根据文件夹下的子文件夹作为分类名
+        # use the names of sub-folders as labels
         folder_list = os.listdir(self.folder_path)
         self.data_folder_list = [x for x in folder_list if '.' not in x]
 

@@ -11,15 +11,6 @@ class LSTM(nn.Module):
                     batch_first=True,
                     bidirectional=True),
         )
-        # self.classifier = nn.Sequential(
-        #     nn.Linear(2 * hidden_size, 2 * hidden_size),
-        #     nn.ReLU(inplace=True),
-        #     nn.Dropout(),
-
-        #     nn.Linear(2 * hidden_size, 2 * hidden_size),
-        #     nn.ReLU(inplace=True),
-        #     nn.Dropout(),
-        # )
         self.output = nn.Linear(2 * hidden_size, out_size)
 
     def forward(self, x):
