@@ -7,7 +7,7 @@ from scipy.sparse import csc_matrix, eye, diags
 from scipy.sparse.linalg import spsolve
 
 
-# 去宇宙射线CRR
+# spike removal
 def despiking(y, filter_size=5, dynamic_factor=4.5):
     len_y = len(y)
     crr_dot = []
@@ -49,7 +49,7 @@ def whittaker_smooth(x, w, lambda_):
 
 def airPLS(x, lambda_=100, itermax=15):
     x = np.array(x)
-    m = x.shape[0]  # 计算长宽维度
+    m = x.shape[0]
     w = np.ones(m)
     for i in range(1, itermax + 1):
         z = whittaker_smooth(x, w, lambda_)

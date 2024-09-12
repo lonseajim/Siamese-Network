@@ -94,48 +94,48 @@ def plot_spectra(spec_dict: dict, label_dict: dict = None, x=None, single_height
                  show_legend=False):
     """
     Plot spectra
-    :param spec_dict: 拉曼光谱字典 {'0':[[],[]], '1':[[],[]]}
-    :param label_dict: 标签字典 {'0':'a', '1':'b'}
+    :param spec_dict: spectra dict {'0':[[],[]], '1':[[],[]]}
+    :param label_dict: labels dict {'0':'a', '1':'b'}
     :param x: []
-    :param single_height: 单个光谱高度
-    :param width: 图片宽度
-    :param fig_title: 标题
-    :param show_legend: 是否显示图例
+    :param single_height: single spectrum height
+    :param width: figure width
+    :param fig_title: figure title
+    :param show_legend: show legend flag
     :return:
     """
     len_labels = len(spec_dict)
-    # 计算均谱
+    # average
     avg_spec_dict, label_dict2 = {}, {}
     for label_no, spec in spec_dict.items():
         avg_spec_dict[label_no] = sum(spec) / len(spec)
         label_dict2[label_no] = label_no
-    # 标签字典
+    # labels dict
     if label_dict is None:
         label_dict = label_dict2
-    # x轴
+    # x axis
     if x is None:
         x = list(range(len(next(iter(avg_spec_dict.values())))))
-    # 设置图像大小
+    # set figure size
     fig = plt.figure(figsize=(width, single_height * len_labels))
 
     for idx, (label_no, label_name) in enumerate(label_dict.items()):
         ax = fig.add_subplot(len_labels, 1, idx + 1)
-        # 显示所有数据
+        # show all data
         for data in spec_dict[label_no]:
             ax.plot(x, data, color='#dddddd')
-        # 显示均线
+        # show average
         ax.plot(x, avg_spec_dict[label_no], color=color_pick(idx), linewidth=3, label=label_name)
-        # 显示边框线
+
         if idx != len_labels - 1:
             ax.spines['bottom'].set_visible(False)
-            ax.xaxis.set_ticks_position('none')  # 隐藏 x 轴刻度线
+            ax.xaxis.set_ticks_position('none')  # hide x axis
             ax.set_xticklabels([])
         ax.spines['top'].set_visible(False)
         ax.spines['right'].set_visible(False)
         ax.legend()
         if show_legend is False:
             ax.get_legend().remove()
-    # 显示坐标轴等信息
+
     top = 0.98
     if fig_title is not None:
         fig.suptitle(fig_title, fontsize=18)
@@ -148,33 +148,32 @@ def plot_spectra(spec_dict: dict, label_dict: dict = None, x=None, single_height
 
 def plot_spectra2(spec_dict: dict, label_dict: dict = None, x=None, offset=0.5, fig_size=(18, 15), fig_title=None,
                   show_legend=False, show_label=False):
-    # len_labels = len(spec_dict)
-    # 计算均谱
+    # average
     avg_spec_dict, label_dict2 = {}, {}
     for label_no, spec in spec_dict.items():
         avg_spec_dict[label_no] = sum(spec) / len(spec)
         label_dict2[label_no] = label_no
-    # 标签字典
+    # labels dict
     if label_dict is None:
         label_dict = label_dict2
-    # x轴
+    # x axis
     if x is None:
         x = list(range(len(next(iter(avg_spec_dict.values())))))
-    # 设置图像大小
+    # set figure size
     fig, ax = plt.subplots(1, 1, figsize=fig_size)
     ax.yaxis.set_major_locator(plt.NullLocator())
 
     for idx, (label_no, label_name) in enumerate(label_dict.items()):
-        # 显示所有数据
+        # show all data
         for data in spec_dict[label_no]:
             ax.plot(x, data - idx * offset, color='#dddddd')
-        # 显示均线
+        # show average
         ax.plot(x, avg_spec_dict[label_no] - idx * offset, color=color_pick(idx), linewidth=2, label=label_name)
 
         ax.legend(bbox_to_anchor=(1.01, 0), fontsize='20', loc=3, borderaxespad=0)
         if show_legend is False:
             ax.get_legend().remove()
-    # 显示坐标轴等信息
+
     if fig_title is not None:
         plt.suptitle(fig_title, fontsize=18)
     if show_label is True:
@@ -186,13 +185,13 @@ def plot_2D_scatter(data: np.array, labels: np.array, fig_size=(14, 10), fig_dpi
     assert len(data) == len(labels)
     fig = plt.figure(figsize=fig_size, dpi=fig_dpi)
     ax = fig.add_subplot(111)
-    # 去重
+    # deduplicate data
     labels_distinct = list(set(labels))
     for idx, label in enumerate(labels_distinct):
         ax.scatter(x=data[labels == label, 0], y=data[labels == label, 1], c=color_pick(idx), s=15, label=label)
-    # 显示图例
+    # show legend
     plt.legend(bbox_to_anchor=(1.01, 0), fontsize='20', loc=3, borderaxespad=0)
-    # 显示标题
+    # show title
     if fig_title is not None:
         plt.title(fig_title)
     # plt.show()
@@ -202,15 +201,15 @@ def plot_3D_scatter(data: np.array, labels: np.array, fig_size=(14, 10), fig_dpi
     assert len(data) == len(labels)
     fig = plt.figure(figsize=fig_size, dpi=fig_dpi)
     ax = fig.add_subplot(111, projection='3d')
-    # 去重
+    # deduplicate data
     labels_distinct = list(set(labels))
     labels_distinct.sort()
     for idx, label in enumerate(labels_distinct):
         ax.scatter(xs=data[labels == label, 0], ys=data[labels == label, 1], zs=data[labels == label, 2],
                    c=color_pick(idx), s=15, label=label)
-    # 显示图例
+    # show legend
     plt.legend(bbox_to_anchor=(1.01, 0), fontsize='20', loc=3, borderaxespad=0)
-    # 显示标题
+    # show title
     if fig_title is not None:
         plt.title(fig_title)
     # plt.show()

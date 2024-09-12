@@ -17,9 +17,9 @@ def plot_3D_scatter(data: np.array, labels: np.array, fig_size=(7, 5), fig_dpi=3
             label = ins + '-' + c
             ax.scatter(xs=data[labels == label, 0], ys=data[labels == label, 1], zs=data[labels == label, 2],
                        c=color_pick(c_idx), marker=marker_pick(in_idx), s=2, label=label)
-    # 显示图例
+
     plt.legend(bbox_to_anchor=(1.06, 0), fontsize='5', loc=3, borderaxespad=0)
-    # 显示标题
+
     if fig_title is not None:
         plt.title(fig_title)
 
@@ -36,9 +36,9 @@ def plot_3D_scatter2(data: np.array, labels: np.array, fig_size=(7, 5), fig_dpi=
         label = ins
         ax.scatter(xs=data[labels == label, 0], ys=data[labels == label, 1], zs=data[labels == label, 2],
                    c=color_pick(in_idx), marker=marker_pick(in_idx), s=2, label=label)
-    # 显示图例
+
     plt.legend(bbox_to_anchor=(1.06, 0), fontsize='5', loc=3, borderaxespad=0)
-    # 显示标题
+
     if fig_title is not None:
         plt.title(fig_title)
 
@@ -63,7 +63,7 @@ ax = fig.add_subplot(111)
 class_list = ['ABA', 'CFR', 'ECO', 'EFA', 'KOX', 'KPN', 'PMA', 'SAU', 'SHO', 'SMA']
 for idx, label in enumerate(class_list):
     ax.scatter(x=pca[labels == label, 0], y=pca[labels == label, 1], c=color_pick(idx), s=18, label=label)
-# 显示图例
+
 plt.legend(bbox_to_anchor=(1.01, 0), fontsize='16', loc=3, borderaxespad=0)
 
 plt.savefig('result/tSNE_2D_P300_600g.png', bbox_inches='tight', pad_inches=0.05, dpi=300)

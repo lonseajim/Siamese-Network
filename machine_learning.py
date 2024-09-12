@@ -2,10 +2,8 @@ import numpy as np
 from sklearn.decomposition import PCA
 from sklearn.manifold import TSNE
 from sklearn.neighbors import KNeighborsClassifier
-import raman.plot as plot
-import matplotlib.pyplot as plt
 import pandas as pd
-from sklearn.model_selection import cross_val_score, train_test_split, StratifiedKFold
+from sklearn.model_selection import StratifiedKFold
 
 
 def do_PCA(spectra, components=2):
@@ -45,9 +43,9 @@ if __name__ == '__main__':
 
     # KNN
     knn = KNeighborsClassifier(n_neighbors=5)
-    # 数据拆分器
+    # data split
     skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
-    # 准确率
+    # accuracy
     scores = []
     other_ds_scores = []
