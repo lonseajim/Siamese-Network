@@ -1,5 +1,5 @@
 """
-拉曼数据预处理方法
+preprocessing
 """
 
 import numpy as np

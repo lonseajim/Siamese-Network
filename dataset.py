@@ -30,10 +30,10 @@ def snn_batch(df, batch_size: int = 512, pos_neg_ratio=0.5):
     neg_size = int(batch_size / (pos_neg_ratio + 1))
     pos_size = batch_size - neg_size
 
-    # 负对
+    # negative pair
     neg_df = df[df['label'] == 0]
     neg_df = neg_df.sample(n=neg_size)
-    # 正对
+    # positive pair
     pos_df = df[df['label'] == 1]
     pos_df = pos_df.sample(n=pos_size)
 

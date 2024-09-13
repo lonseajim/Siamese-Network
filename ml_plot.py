@@ -43,7 +43,7 @@ def plot_3D_scatter2(data: np.array, labels: np.array, fig_size=(7, 5), fig_dpi=
         plt.title(fig_title)
 
 
-df = pd.read_csv('E:/Code/xlab-toolkit/raman/data/P300_600g_norm2.csv', index_col=0)
+df = pd.read_csv('P300_600g_norm2.csv', index_col=0)
 
 spectra = []
 labels = []

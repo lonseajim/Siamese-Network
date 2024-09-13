@@ -14,4 +14,3 @@ def dist_Manhattan(vec_a, vec_b):
 # cosine
 def dist_cosine(vec_a, vec_b):
     return np.dot(vec_a, vec_b) / (np.linalg.norm(vec_a) * np.linalg.norm(vec_b))
-

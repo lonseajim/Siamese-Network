@@ -9,16 +9,16 @@ def train(train_dataloader: DataLoader, val_dataloader: DataLoader, model: torch
           scheduler=None, num_epochs=1000, early_stop_epochs=0, model_path='checkpoints/best_model.pth', log=False):
     """
     Train deep learning model
-    :param train_dataloader: 训练集
-    :param val_dataloader: 验证集或者测试集
-    :param model: 模型
-    :param criterion: 损失函数
-    :param optimizer: 优化器
-    :param scheduler: 优化器学习率调度
-    :param num_epochs: 循环次数
-    :param early_stop_epochs: 提前停止训练的循环数（当前循环数-最好结果的循环数）
-    :param model_path: 模型保存路径
-    :param log: 是否打印中间过程
+    :param train_dataloader: train DataLoader
+    :param val_dataloader: validation DataLoader
+    :param model: model
+    :param criterion: loss function
+    :param optimizer: optimizer
+    :param scheduler: scheduler
+    :param num_epochs: epoch
+    :param early_stop_epochs: early stop epochs(current_epoch - best_model_epoch)
+    :param model_path: best model save path
+    :param log: log flag
     :return:
     """
     if log is True:
@@ -41,7 +41,7 @@ def train(train_dataloader: DataLoader, val_dataloader: DataLoader, model: torch
         if scheduler is not None:
             scheduler.step()
 
-        # 在验证集上计算准确率
+        # test in validation DataLoader
         correct = 0
         total = 0
         model.eval()
@@ -64,7 +64,7 @@ def train(train_dataloader: DataLoader, val_dataloader: DataLoader, model: torch
             print('Epoch [{}/{}], Loss: {:.4f}, Accuracy: {:.2f}%'.format(ep + 1, num_epochs, loss.item(), acc))
             print('Best accuracy is: {:.2f}%, epoch: {}'.format(best_acc, best_epoch))
 
-        # 如果当前循环数 - 最好结果的循环数大于early_stop_epochs，则停止训练
+        # if current_epoch - best_model_epoch > early_stop_epochs, stop train
         if early_stop_epochs > 0:
             if ep - best_epoch > early_stop_epochs:
                 break
