@@ -31,26 +31,40 @@
 
 ## Data preprocessing
 
-The preprocessing function is in **'precess_fun.py'**.
+The preprocessing function is in `precess_fun.py`.
 
-Load data by the class in **'base.py'** and set **process_flag=True**. The steps of data preprocessing are as follows:
+Load data by the class in `base.py` and set `process_flag=True`. The steps of data preprocessing are as follows:
 
-* Step 1：spike removal
-* Step 2：baseline subtraction
-* Step 3：normalization
+* **Step 1**：spike removal
+* **Step 2**：baseline subtraction
+* **Step 3**：normalization
 
-Then, the preprocessed data can be saved in '.txt' or '.npy' files.
+Then, the preprocessed data can be saved in `.txt` or `.npy` files.
 
 ## Data preparation
 
-There 3 functions in **'dataset.py'** to create csv files for data preparation.
+There 3 functions in `dataset.py` to create csv files for data preparation.
 
-* **'create_folder_csv'**: Create a csv file with data folder.
-* **'create_fsl_ds_csv'**: Split two csv files into four csv files for training and testing.
-* **'merge_fsl_csv'**: Merge two csv files into one with positive and negative pairs for SNN model Training
+* `create_folder_csv`: Create a csv file with data folder.
+* `create_fsl_ds_csv`: Split two csv files into four csv files for training and testing.
+* `merge_fsl_csv`: Merge two csv files into one with positive and negative pairs for SNN model Training
 
 ## Model training
 
 ### Classification task
 
-> notebook/train_classification.ipynb
+`notebook/train_classification.ipynb`: Train Resnet, Transformer and LSTM classification models.
+
+### Siamese Neural Network (SNN)
+
+`notebook/train_snn.ipynb`: Train Siamese-Resnet, Siamese-Transformer and Siamese-LSTM models.
+
+## Model testing
+
+### Classification task
+
+`notebook/test_classification.ipynb`
+
+### Siamese Neural Network (SNN)
+
+`notebook/test_snn.ipynb`
